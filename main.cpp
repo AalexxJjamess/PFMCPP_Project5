@@ -128,16 +128,16 @@ int InstrumentCluster::showMiles()
 
 Bike::Bike() { currentGear = 1; }
 
-Bike::~Bike() { std::cout << "Bike\n"; }
+Bike::~Bike() { slowDown(speed); }
 
 void Bike::moveForwards(int howFar)
 {
     distanceTravelled += howFar * speed;
 }
 
-void Bike::slowDown(int howMuch = -10)
+void Bike::slowDown(int howMuch)
 {
-    speed += howMuch;
+    speed -= howMuch;
 }
 
 void Bike::changeGearUp(int gearup = 1)
@@ -220,7 +220,7 @@ void Handlebars::lightsUp(int howMuch)
 };
 
 Engine::Engine() { noise = fuelType = RPM = 0; }
-Engine::~Engine() { std::cout << "Engine\n"; }
+Engine::~Engine() { increaseRPM(-RPM); }
 
 void Engine::increaseRPM(int howMuch)
 {
