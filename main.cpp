@@ -35,10 +35,8 @@ Purpose:  This project continues developing Project3.
 /*
  copied UDT 1:
  */
- struct Band
+struct Band 
 {
-
-
     int currentSong;
     bool playingSong = false;
     std::string songNames = "Cissy Strut, Everyday People, Alone Again Or";
@@ -54,8 +52,11 @@ Band::Band() : currentSong(1)
 { 
     std::cout << "Setlist: " << songNames << std::endl;
 }
-Band::~Band() { std::cout << "Band\n"; }
 
+Band::~Band() 
+{ 
+    std::cout << "~Band\n"; 
+}
 
 void Band::moveToNextSong()
 {
@@ -85,7 +86,6 @@ struct Turntable
     Turntable();
     ~Turntable();
 
-
     void spinPlatter(int);
     void switchlightOn();
     void lowerStylus();
@@ -99,7 +99,7 @@ Turntable::Turntable()
 
 Turntable::~Turntable()
 {
-    std::cout << "Turntable" << std::endl;
+    std::cout << "~Turntable" << std::endl;
 }
 
 void Turntable::spinPlatter(int RPM)
@@ -125,7 +125,7 @@ void Turntable::lowerStylus()
 /*
  copied UDT 3:
  */
- struct Bike
+struct Bike
 {
     int currentGear;
     char frameMaterial;
@@ -140,12 +140,15 @@ void Turntable::lowerStylus()
     void changeGearUp(int);
 };
 
-Bike::Bike() { currentGear = 1; }
+Bike::Bike() 
+{ 
+    currentGear = 1; 
+}
 
 Bike::~Bike()
 { 
     slowDown(speed); 
-    std::cout << "Bike" << std::endl;
+    std::cout << "~Bike" << std::endl;
 }
 
 void Bike::moveForwards(int howFar)
@@ -162,7 +165,6 @@ void Bike::changeGearUp(int gearup = 1)
 {
     currentGear += gearup;
     std::cout << "Going up a gear." << std::endl;
-
 }
 
 /*
@@ -182,10 +184,9 @@ struct GuitarBusker
     void playSet();
 };
 
-
 GuitarBusker::~GuitarBusker()
 {
-    std::cout << "Busker" << std::endl;
+    std::cout << "~Busker" << std::endl;
 }
 
 void GuitarBusker::moveToNewSpot(int howFar)
@@ -217,7 +218,7 @@ struct DJBusker
 
 DJBusker::~DJBusker()
 {
-    std::cout << "DJBusker" << std::endl;
+    std::cout << "~DJBusker" << std::endl;
 }
 
 void DJBusker::playRecord(bool single)
