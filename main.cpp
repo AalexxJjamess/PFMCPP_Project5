@@ -42,17 +42,18 @@ Purpose:  This project continues developing Project3.
     int currentSong;
     bool playingSong = false;
     std::string songNames = "Cissy Strut, Everyday People, Alone Again Or";
-    int numberOfMembers;
-    int totalTourDistance = 0;
+    int numberOfSongs;
 
     Band();
     ~Band();
     void moveToNextSong();
     void playSong();
-    void goToGig(int);
 };
 
-Band::Band() : currentSong(0){}
+Band::Band() : currentSong(1)
+{ 
+    std::cout << "Setlist: " << songNames << std::endl;
+}
 Band::~Band() { std::cout << "Band\n"; }
 
 
@@ -64,50 +65,63 @@ void Band::moveToNextSong()
 void Band::playSong()
 {
     playingSong = true;
-    std::cout << "Playing: "<< songNames << std::endl;;
+    std::cout << "Playing song: "<< currentSong << std::endl;
+    playingSong = false;
 }
 
-void Band::goToGig(int howFar = 10)
-{
-    totalTourDistance += howFar;
-}
+
 
 /*
  copied UDT 2:
  */
-struct InstrumentCluster
+struct Turntable
 {
+    std::string cartType;
+    char chassisMaterial;
+    int armHeight;
     int speed;
-    int miles;
-    int fuel;
-    int time;
-    int RPM;
+    bool stylusOn = false;
+    bool lightOn = false;
+    Turntable();
+    ~Turntable();
 
-    InstrumentCluster();
-    ~InstrumentCluster();
-    int showSpeed();
-    int showRPM();
-    int showMiles();
 
+    void spinPlatter(int);
+    void switchlightOn();
+    void lowerStylus();
 };
 
-InstrumentCluster::InstrumentCluster() : speed(0), miles(0), fuel(0), time(0), RPM(0){}
-InstrumentCluster::~InstrumentCluster() { std::cout << "InstrumentCluster\n"; }
-
-int InstrumentCluster::showSpeed()
+Turntable::Turntable()
 {
-    return speed;
+    speed = 0;
+    armHeight = 100;
 }
 
-int InstrumentCluster::showRPM()
+Turntable::~Turntable()
 {
-    return RPM;
+    std::cout << "Turntable" << std::endl;
 }
 
-int InstrumentCluster::showMiles()
+void Turntable::spinPlatter(int RPM)
 {
-    return miles;
+    speed = RPM;
 }
+
+void Turntable::switchlightOn()
+{
+    lightOn = true;
+}
+
+void Turntable::lowerStylus()
+{
+    stylusOn = true;
+    for (int i = armHeight; i == 0; --i)
+    {
+        armHeight = i;
+    }
+}
+
+
 /*
  copied UDT 3:
  */
@@ -116,7 +130,7 @@ int InstrumentCluster::showMiles()
     int currentGear;
     char frameMaterial;
     float seatHeight;
-    int distanceTravelled;
+    int distanceTravelled = 0;
     int speed = 1;
     
     Bike();
@@ -128,7 +142,11 @@ int InstrumentCluster::showMiles()
 
 Bike::Bike() { currentGear = 1; }
 
-Bike::~Bike() { slowDown(speed); }
+Bike::~Bike()
+{ 
+    slowDown(speed); 
+    std::cout << "Bike" << std::endl;
+}
 
 void Bike::moveForwards(int howFar)
 {
@@ -151,92 +169,77 @@ void Bike::changeGearUp(int gearup = 1)
  new UDT 4:
  with 2 member functions
  */
- struct Handlebars
-{
-    int clutch = 0;
-    int steeringAngle;
-    int headLights;
-    int acceleration;
-    
-    Handlebars();
-    ~Handlebars();
 
-    void clutchUp();
-    void steer(int);
-    void lightsUp(int);
-    
+
+
+struct GuitarBusker
+{
+    Band oneManBand;
+    Bike buskerBike;
+
+    ~GuitarBusker();
+    void moveToNewSpot(int);
+    void playSet();
 };
 
-Handlebars::Handlebars() : clutch(0), steeringAngle(0), headLights(0), acceleration(0){}
-Handlebars::~Handlebars() { std::cout << "Handlebars\n"; }
 
-void Handlebars::clutchUp()
+GuitarBusker::~GuitarBusker()
 {
-     while (clutch < 101) 
-     {
-        if (clutch == 100)
-        {
-            std::cout << "The clutch is now at 100%" << std::endl;
-        }
-        ++clutch;
-     }
-
+    std::cout << "Busker" << std::endl;
 }
 
-void Handlebars::steer(int angleChange = 20)
+void GuitarBusker::moveToNewSpot(int howFar)
 {
-    steeringAngle += angleChange;
-}
-
-void Handlebars::lightsUp(int howMuch)
-{
-    headLights += howMuch;
-}
-
-/*
- new UDT 5:
- with 2 member functions
- */
- struct Engine
-{
-    struct Cyclinders
+    for (int i = 0; i < howFar; ++i)
     {
-        int cc;
-        int strokes;    
-    };
+        buskerBike.distanceTravelled++;
+    }
+}
 
-    float fuelPerMile;
-    int fuelType;
-    int coolingType;
-    int noise;
-    int temperature;
-    int RPM;
+void GuitarBusker::playSet()
+{   
+    for (int i = 0; i < oneManBand.numberOfSongs; i++)
+        oneManBand.playSong();
+        oneManBand.currentSong++;
+}
 
-    Engine();
-    ~Engine();
-    void increaseRPM(int);
-    void makeNoise(int);
-    void heatUp(int);
+//New UDT 5:
+
+struct DJBusker
+{
+    Bike djBuskerBike;
+    Turntable djRig;
+    
+    ~DJBusker();
+    void moveToNewSpot(int);
+    void playRecord(bool);
 };
 
-Engine::Engine() { noise = fuelType = RPM = 0; }
-Engine::~Engine() { increaseRPM(-RPM); }
-
-void Engine::increaseRPM(int howMuch)
+DJBusker::~DJBusker()
 {
-    RPM += howMuch;
+    std::cout << "DJBusker" << std::endl;
 }
 
-void Engine::makeNoise(int volume)
+void DJBusker::playRecord(bool single)
 {
-    noise += volume;
+    djRig.lowerStylus();
+    if (single)
+    {
+        djRig.spinPlatter(45);
+    }
+    else
+    {
+        djRig.spinPlatter(33);
+    }
 }
 
-void Engine::heatUp(int temp)
+void DJBusker::moveToNewSpot(int howFar)
 {
-    temperature += temp;
+    for (int i = 0; i < howFar; ++i)
+    {
+        djBuskerBike.distanceTravelled++;
+    }
 }
-
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -255,5 +258,32 @@ void Engine::heatUp(int temp)
 #include <iostream>
 int main()
 {
+
+//======================================================
+
+    Band myBand;
+    Band yourBand;
+    myBand.playSong();
+    std::cout << yourBand.numberOfSongs << std::endl;;
+
+//======================================================
+
+    Bike roadbike;
+    Bike mountain;
+    roadbike.changeGearUp(1);
+    mountain.moveForwards(10);
+
+//======================================================
+
+    Turntable technics;
+    technics.lowerStylus();
+    technics.switchlightOn();
+
+//======================================================
+
+    GuitarBusker townes;
+    DJBusker shadow;
+
+
     std::cout << "good to go!" << std::endl;
 }
