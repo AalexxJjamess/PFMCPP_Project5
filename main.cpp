@@ -179,11 +179,16 @@ struct GuitarBusker
     Band oneManBand;
     Bike buskerBike;
 
+    GuitarBusker();
     ~GuitarBusker();
     void moveToNewSpot(int);
     void playSet();
 };
 
+GuitarBusker::GuitarBusker()
+{
+    std::cout << "New Guitar Busker" << std::endl;
+}
 GuitarBusker::~GuitarBusker()
 {
     std::cout << "~Busker" << std::endl;
@@ -211,11 +216,16 @@ struct DJBusker
     Bike djBuskerBike;
     Turntable djRig;
     
+    DJBusker();
     ~DJBusker();
     void moveToNewSpot(int);
     void playRecord(bool);
 };
 
+DJBusker::DJBusker()
+{
+    std::cout << "New DJ" << std::endl;
+}
 DJBusker::~DJBusker()
 {
     std::cout << "~DJBusker" << std::endl;
