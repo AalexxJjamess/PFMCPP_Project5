@@ -214,6 +214,7 @@ struct GuitarBusker
     ~GuitarBusker();
     void moveToNewSpot(int);
     void playSet();
+    void saySetlist();
 };
 
 GuitarBusker::GuitarBusker()
@@ -240,7 +241,13 @@ void GuitarBusker::playSet()
         oneManBand.currentSong++;
 }
 
-//New UDT 5:
+void GuitarBusker::saySetlist()
+{
+    std::cout << "Busker setlist: " << this->oneManBand.songNames << std::endl;
+}
+
+//New UDT 5: 2) For each std::cout statement in main() that accessed member variables of your types or printed out the results of your member function calls,
+ //       a) write a member function that prints the same thing out, but uses the proper techniques inside the member functions to access the same member variables/functions.
 
 struct DJBusker
 {
@@ -251,6 +258,7 @@ struct DJBusker
     ~DJBusker();
     void moveToNewSpot(int);
     void playRecord(bool);
+    void sayTurntableSpeed();
 };
 
 DJBusker::DJBusker()
@@ -281,6 +289,11 @@ void DJBusker::moveToNewSpot(int howFar)
     {
         djBuskerBike.distanceTravelled++;
     }
+}
+
+void DJBusker::sayTurntableSpeed()
+{
+    std::cout << "Turntable speed at: " << this->djRig.speed << std::endl;
 }
 
 /*
@@ -325,7 +338,16 @@ int main()
 
     GuitarBusker townes;
     DJBusker shadow;
+    townes.oneManBand.songNames = "Lungs, Pancho & Lefty";
+    shadow.djRig.spinPlatter(45);
 
+
+    std::cout << "Turntable speed at: " << shadow.djRig.speed << std::endl;
+    std::cout << "Busker Setlist: " << townes.oneManBand.songNames << std::endl;
+
+    shadow.sayTurntableSpeed();
+    townes.saySetlist();
+    
 
     std::cout << "good to go!" << std::endl;
 }
