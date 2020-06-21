@@ -364,10 +364,11 @@ struct DJBuskerWrapper
  */
 
 #include <iostream>
+#include "LeakedObjectDetector.h"
 
 int main()
 {
-    #include "LeakedObjectDetector.h"
+    
 //======================================================
 
     BandWrapper myBand( new Band());
