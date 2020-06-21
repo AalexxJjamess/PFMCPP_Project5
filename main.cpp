@@ -43,6 +43,8 @@ You don't have to do this, you can keep your current object name and just change
 
 
 #include<iostream>
+#include "LeakedObjectDetector.h"
+
 /*
  copied UDT 1:
  */
@@ -363,8 +365,6 @@ struct DJBuskerWrapper
  Wait for my code review.
  */
 
-#include <iostream>
-#include "LeakedObjectDetector.h"
 
 int main()
 {
