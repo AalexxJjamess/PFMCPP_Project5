@@ -58,7 +58,8 @@ struct Band
     ~Band();
     void moveToNextSong();
     void playSong();
-    //JUCE_LEAK_DETECTOR(Band)
+
+    JUCE_LEAK_DETECTOR(Band);
 };
 
 Band::Band() : currentSong(1)
@@ -102,7 +103,8 @@ struct Turntable
     void spinPlatter(int);
     void switchlightOn();
     void lowerStylus();
-    //JUCE_LEAK_DETECTOR(Turntable)
+
+    JUCE_LEAK_DETECTOR(Turntable);
 };
 
 Turntable::Turntable()
@@ -152,7 +154,8 @@ struct Bike
     void moveForwards(int);
     void slowDown(int);
     void changeGearUp(int);
-    //JUCE_LEAK_DETECTOR(Bike)
+
+    JUCE_LEAK_DETECTOR(Bike);
 };
 
 Bike::Bike() 
@@ -199,7 +202,7 @@ struct GuitarBusker
     void moveToNewSpot(int);
     void playSet();
     void saySetlist();
-    //JUCE_LEAK_DETECTOR(GuitarBusker)
+    JUCE_LEAK_DETECTOR(GuitarBusker);
 };
 
 GuitarBusker::GuitarBusker()
@@ -244,7 +247,7 @@ struct DJBusker
     void moveToNewSpot(int);
     void playRecord(bool);
     void sayTurntableSpeed();
-    //JUCE_LEAK_DETECTOR(DJBusker)
+    JUCE_LEAK_DETECTOR(DJBusker);
 };
 
 DJBusker::DJBusker()
@@ -361,30 +364,30 @@ struct DJBuskerWrapper
  */
 
 #include <iostream>
-#include "LeakedObjectDetector.h"
+
 int main()
 {
+    #include "LeakedObjectDetector.h"
 //======================================================
 
-#if false
-AxeWrapper axWrapper( new Axe() );
-std::cout << "axe sharpness: " << axWrapper.axPtr->sharpness << "\n";
-#endif
-
     BandWrapper myBand( new Band());
-    std::cout << myBand.pointerToBand->songNames;
+    BandWrapper yourBand( new Band());
+    myBand.pointerToBand->playSong();
+    std::cout << yourBand.pointerToBand->numberOfSongs;
     
 
 //======================================================
 
-    BikeWrapper myBike( new Bike());
-    myBike.pointerToBike->changeGearUp();
+    BikeWrapper roadbike( new Bike());
+    BikeWrapper mountain( new Bike());
+    roadbike.pointerToBike->changeGearUp(1);
+    mountain.pointerToBike->moveForwards(10);
 
 //======================================================
 
     TurntableWrapper technics(new Turntable());
     technics.pointerToTurntable->lowerStylus();
-    
+    technics.pointerToTurntable->switchlightOn();
 
 //======================================================
 
@@ -402,6 +405,6 @@ std::cout << "axe sharpness: " << axWrapper.axPtr->sharpness << "\n";
 
     shadow.sayTurntableSpeed();
     
-
+ 
     std::cout << "good to go!" << std::endl;
 }
