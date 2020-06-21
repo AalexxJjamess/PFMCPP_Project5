@@ -20,9 +20,9 @@ Create a branch named Part3
     This means if you had something like the following in your main() previously: 
 */
 #if false
- Axe axe;
- std::cout << "axe sharpness: " << axe.sharpness << "\n";
- #endif
+Axe axe;
+std::cout << "axe sharpness: " << axe.sharpness << "\n";
+#endif
  /*
     you would update that to use your wrappers:
     
@@ -46,6 +46,7 @@ You don't have to do this, you can keep your current object name and just change
 /*
  copied UDT 1:
  */
+
 struct Band 
 {
     int currentSong;
@@ -57,6 +58,7 @@ struct Band
     ~Band();
     void moveToNextSong();
     void playSong();
+    //JUCE_LEAK_DETECTOR(Band)
 };
 
 Band::Band() : currentSong(1)
@@ -100,6 +102,7 @@ struct Turntable
     void spinPlatter(int);
     void switchlightOn();
     void lowerStylus();
+    //JUCE_LEAK_DETECTOR(Turntable)
 };
 
 Turntable::Turntable()
@@ -149,6 +152,7 @@ struct Bike
     void moveForwards(int);
     void slowDown(int);
     void changeGearUp(int);
+    //JUCE_LEAK_DETECTOR(Bike)
 };
 
 Bike::Bike() 
@@ -195,6 +199,7 @@ struct GuitarBusker
     void moveToNewSpot(int);
     void playSet();
     void saySetlist();
+    //JUCE_LEAK_DETECTOR(GuitarBusker)
 };
 
 GuitarBusker::GuitarBusker()
@@ -239,6 +244,7 @@ struct DJBusker
     void moveToNewSpot(int);
     void playRecord(bool);
     void sayTurntableSpeed();
+    //JUCE_LEAK_DETECTOR(DJBusker)
 };
 
 DJBusker::DJBusker()
@@ -276,6 +282,70 @@ void DJBusker::sayTurntableSpeed()
     std::cout << "Turntable speed at: " << this->djRig.speed << std::endl;
 }
 
+// WRAPPER CLASSES ============================================
+struct BandWrapper
+{
+    BandWrapper(Band* ptr) : pointerToBand(ptr) {}
+    ~BandWrapper()
+    {
+        delete pointerToBand;
+    }
+
+    Band* pointerToBand;
+
+};
+
+struct TurntableWrapper
+{
+       TurntableWrapper(Turntable* ptr) : pointerToTurntable(ptr) {}
+    ~TurntableWrapper()
+    {
+        delete pointerToTurntable;
+    }
+
+    Turntable* pointerToTurntable;
+
+
+};
+
+struct BikeWrapper
+{
+       BikeWrapper(Bike* ptr) : pointerToBike(ptr) {}
+    ~BikeWrapper()
+    {
+        delete pointerToBike;
+    }
+
+    Bike* pointerToBike;
+
+
+};
+
+struct GuitarBuskerWrapper
+{
+   GuitarBuskerWrapper(GuitarBusker* ptr) : pointerToGuitarBusker(ptr) {}
+    ~GuitarBuskerWrapper()
+    {
+        delete pointerToGuitarBusker;
+    }
+
+    GuitarBusker* pointerToGuitarBusker;
+
+};
+
+struct DJBuskerWrapper
+{
+   DJBuskerWrapper(DJBusker* ptr) : pointerToDJBusker(ptr) {}
+    ~DJBuskerWrapper()
+    {
+        delete pointerToDJBusker;
+    }
+
+    DJBusker* pointerToDJBusker;
+
+};
+
+
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 
@@ -291,41 +361,46 @@ void DJBusker::sayTurntableSpeed()
  */
 
 #include <iostream>
+#include "LeakedObjectDetector.h"
 int main()
 {
 //======================================================
 
-    Band myBand;
-    Band yourBand;
-    myBand.playSong();
-    std::cout << yourBand.numberOfSongs << std::endl;;
+#if false
+AxeWrapper axWrapper( new Axe() );
+std::cout << "axe sharpness: " << axWrapper.axPtr->sharpness << "\n";
+#endif
+
+    BandWrapper myBand( new Band());
+    std::cout << myBand.pointerToBand->songNames;
+    
 
 //======================================================
 
-    Bike roadbike;
-    Bike mountain;
-    roadbike.changeGearUp(1);
-    mountain.moveForwards(10);
+    BikeWrapper myBike( new Bike());
+    myBike.pointerToBike->changeGearUp();
 
 //======================================================
 
-    Turntable technics;
-    technics.lowerStylus();
-    technics.switchlightOn();
+    TurntableWrapper technics(new Turntable());
+    technics.pointerToTurntable->lowerStylus();
+    
 
 //======================================================
 
-    GuitarBusker townes;
     DJBusker shadow;
-    townes.oneManBand.songNames = "Lungs, Pancho & Lefty";
+    
+
+    GuitarBuskerWrapper townes(new GuitarBusker());
+    townes.pointerToGuitarBusker->oneManBand.songNames = "Lungs, Pancho & Lefty";
+    townes.pointerToGuitarBusker->playSet();
     shadow.djRig.spinPlatter(45);
 
 
     std::cout << "Turntable speed at: " << shadow.djRig.speed << std::endl;
-    std::cout << "Busker Setlist: " << townes.oneManBand.songNames << std::endl;
+    std::cout << "Busker Setlist: " << townes.pointerToGuitarBusker->oneManBand.songNames << std::endl;
 
     shadow.sayTurntableSpeed();
-    townes.saySetlist();
     
 
     std::cout << "good to go!" << std::endl;
