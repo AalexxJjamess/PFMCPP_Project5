@@ -61,7 +61,7 @@ struct Band
     void moveToNextSong();
     void playSong();
 
-    JUCE_LEAK_DETECTOR(Band);
+    JUCE_LEAK_DETECTOR(Band)
 };
 
 Band::Band() : currentSong(1)
@@ -106,7 +106,7 @@ struct Turntable
     void switchlightOn();
     void lowerStylus();
 
-    JUCE_LEAK_DETECTOR(Turntable);
+    JUCE_LEAK_DETECTOR(Turntable)
 };
 
 Turntable::Turntable()
@@ -157,7 +157,7 @@ struct Bike
     void slowDown(int);
     void changeGearUp(int);
 
-    JUCE_LEAK_DETECTOR(Bike);
+    JUCE_LEAK_DETECTOR(Bike)
 };
 
 Bike::Bike() 
@@ -204,7 +204,7 @@ struct GuitarBusker
     void moveToNewSpot(int);
     void playSet();
     void saySetlist();
-    JUCE_LEAK_DETECTOR(GuitarBusker);
+    JUCE_LEAK_DETECTOR(GuitarBusker)
 };
 
 GuitarBusker::GuitarBusker()
@@ -249,7 +249,7 @@ struct DJBusker
     void moveToNewSpot(int);
     void playRecord(bool);
     void sayTurntableSpeed();
-    JUCE_LEAK_DETECTOR(DJBusker);
+    JUCE_LEAK_DETECTOR(DJBusker)
 };
 
 DJBusker::DJBusker()
@@ -392,19 +392,16 @@ int main()
 
 //======================================================
 
-    DJBusker shadow;
-    
-
+    DJBuskerWrapper shadow(new DJBusker());
     GuitarBuskerWrapper townes(new GuitarBusker());
     townes.pointerToGuitarBusker->oneManBand.songNames = "Lungs, Pancho & Lefty";
     townes.pointerToGuitarBusker->playSet();
-    shadow.djRig.spinPlatter(45);
+    shadow.pointerToDJBusker->djRig.spinPlatter(45);
 
 
-    std::cout << "Turntable speed at: " << shadow.djRig.speed << std::endl;
+    std::cout << "Turntable speed at: " << shadow.pointerToDJBusker->djRig.speed << std::endl;
     std::cout << "Busker Setlist: " << townes.pointerToGuitarBusker->oneManBand.songNames << std::endl;
-
-    shadow.sayTurntableSpeed();
+    shadow.pointerToDJBusker->sayTurntableSpeed();
     
  
     std::cout << "good to go!" << std::endl;
