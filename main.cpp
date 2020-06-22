@@ -302,7 +302,7 @@ struct BandWrapper
 
 struct TurntableWrapper
 {
-       TurntableWrapper(Turntable* ptr) : pointerToTurntable(ptr) {}
+    TurntableWrapper(Turntable* ptr) : pointerToTurntable(ptr) {}
     ~TurntableWrapper()
     {
         delete pointerToTurntable;
@@ -315,7 +315,7 @@ struct TurntableWrapper
 
 struct BikeWrapper
 {
-       BikeWrapper(Bike* ptr) : pointerToBike(ptr) {}
+    BikeWrapper(Bike* ptr) : pointerToBike(ptr) {}
     ~BikeWrapper()
     {
         delete pointerToBike;
@@ -328,7 +328,7 @@ struct BikeWrapper
 
 struct GuitarBuskerWrapper
 {
-   GuitarBuskerWrapper(GuitarBusker* ptr) : pointerToGuitarBusker(ptr) {}
+    GuitarBuskerWrapper(GuitarBusker* ptr) : pointerToGuitarBusker(ptr) {}
     ~GuitarBuskerWrapper()
     {
         delete pointerToGuitarBusker;
@@ -340,7 +340,7 @@ struct GuitarBuskerWrapper
 
 struct DJBuskerWrapper
 {
-   DJBuskerWrapper(DJBusker* ptr) : pointerToDJBusker(ptr) {}
+    DJBuskerWrapper(DJBusker* ptr) : pointerToDJBusker(ptr) {}
     ~DJBuskerWrapper()
     {
         delete pointerToDJBusker;
@@ -400,7 +400,7 @@ int main()
 
 
     std::cout << "Turntable speed at: " << shadow.pointerToDJBusker->djRig.speed << std::endl;
-    std::cout << "Busker Setlist: " << townes.pointerToGuitarBusker->oneManBand.songNames << std::endl;
+    townes.pointerToGuitarBusker->saySetlist();
     shadow.pointerToDJBusker->sayTurntableSpeed();
     
  
