@@ -83,11 +83,9 @@ int main()
     townes.pointerToGuitarBusker->playSet();
     shadow.pointerToDJBusker->djRig.spinPlatter(45);
 
-
     std::cout << "Turntable speed at: " << shadow.pointerToDJBusker->djRig.speed << std::endl;
     townes.pointerToGuitarBusker->saySetlist();
     shadow.pointerToDJBusker->sayTurntableSpeed();
     
- 
     std::cout << "good to go!" << std::endl;
 }
