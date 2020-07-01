@@ -44,12 +44,6 @@
  */
 #include <iostream>
 #include "LeakedObjectDetector.h"
-#include "band.cpp"
-#include "bike.cpp"
-#include "turntable.cpp"
-#include "guitarbusker.cpp"
-#include "djbusker.cpp"
-#include "wrappers.cpp"
 
 int main()
 {
