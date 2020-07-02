@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include <string>
 #include "LeakedObjectDetector.h"
 struct Band 
